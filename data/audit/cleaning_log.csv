@@ -1,0 +1,12 @@
+step,table,issue,action,rows_affected,note
+1,(all),leading/trailing whitespace,standardize (trim),0,audit found none; step kept as a guard
+2,dim_client,"25 duplicate clients (last_name off by one letter), IDs 2501-2525",quarantine,25,survivor ID kept in quarantine column duplicate_of_client_id; 0 facts referenced the duplicates
+3,dim_client,state stored as full name,standardize,77,Pennsylvania->PA; Florida->FL; New York->NY; New Jersey->NJ; California->CA; Illinois->IL; Texas->TX; audit found 78 - the other 1 was on a duplicate client quarantined in step 2
+4,dim_client,blank risk_profile,fill + flag,75,filled from snapshot benchmark; benchmark->profile used: {'3': 'Balanced'}; flag_risk_profile_inferred=1
+5,fact_transactions,integer key stored as float text ('45.0'),convert,197175,RI match 0.00% -> 100.00%; blanks on cash transactions left blank
+6,fact_transactions,orphan client_id (2702-3192),quarantine,200,"all are duplicates of valid txns (trace: duplicate_of_txn_id); amount removed $10,888,495.37"
+7,fact_transactions,negative shares on Buy,convert (absolute value),835,reconciled: amount = shares x price now holds on 100% of Buy/Sell/Dividend rows (was 99.5762%); audit found 836 - the other 1 was on an orphan row quarantined in step 6
+8,fact_portfolio_snapshot,return_ytd stored as percent string,convert (/100),300,verified per row: converted return = benchmark_return_ytd + active_alpha_ytd
+9,fact_portfolio_snapshot,aum = 1000.0 placeholder,flag,420,flag_aum_placeholder=1; value kept (true balance unknown)
+10,fact_fees,aum_basis = 1000.0 placeholder,flag,386,flag_aum_placeholder=1; 100% match a flagged snapshot for the same client-month
+11,fact_portfolio_snapshot,return_ytd outside +/-100% or measured from the 1000.0 placeholder,flag,1171,flag_return_implausible=1; values kept (they reconcile to AUM: 100.00%)
