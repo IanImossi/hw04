@@ -180,7 +180,6 @@ SCHEMA: dict[str, dict] = {
         "ranges": {"aum": (0.01, None, "ERROR", "AUM must be positive"),
                    "return_ytd": (-1, 1, "WARN", "a YTD return below -100% is impossible; above +100% is implausible"),
                    "benchmark_return_ytd": (-1, 1, "WARN", "benchmark YTD return outside +/-100%"),
-                   "active_alpha_ytd": (-1, 1, "WARN", "beating/trailing the benchmark by more than 100 points is implausible"),
                    "cash_pct": (0, 1, "ERROR", "a share must be between 0 and 1"),
                    "month": (1, 12, "ERROR", "calendar"),
                    "year": (2020, 2024, "ERROR", "outside extract period"),
@@ -938,34 +937,6 @@ def cross_table_rules(T: dict[str, pd.DataFrame], F: Findings) -> None:
     F.add("fact_portfolio_snapshot", "snapshot_date", 4, "snapshot month with no fee charged", "INFO",
           int(no_fee.sum()), len(snap), "could be fee waivers or quarterly billing - investigate, not automatically wrong")
 
-    # 4.3b placeholder AUM: the dominant repeated AUM value (e.g. 1000.0) contaminates fees and returns
-    vc = snap["aum"].value_counts()
-    if len(vc) > 1 and vc.iloc[0] >= 20 and vc.iloc[0] >= 10 * vc.iloc[1]:
-        ph = vc.index[0]
-        ph_snap = snap[snap["aum"] == ph]
-        ph_keys = set(zip(ph_snap["client_id"], ph_snap["snapshot_date"]))
-        fee_on_ph = pd.Series(list(zip(fees["client_id"], fees["fee_date"])), index=fees.index).isin(ph_keys)
-        F.add("fact_fees", "aum_basis+amount", 4, f"fee charged on placeholder snapshot AUM {ph!r}", "ERROR",
-              int(fee_on_ph.sum()), len(fees),
-              f"{int((fees.loc[fee_on_ph, 'aum_basis'] == ph).sum())} of these also carry aum_basis={ph!r}; "
-              f"amounts {to_number(fees.loc[fee_on_ph, 'amount']).min()}-{to_number(fees.loc[fee_on_ph, 'amount']).max()} "
-              "are fees on a fake balance", fees.loc[fee_on_ph, "fee_id"])
-        ph_clients = set(ph_snap["client_id"])
-        extreme = (to_number(snap["return_ytd"]).abs() > 1) | (to_number(snap["active_alpha_ytd"]).abs() > 1)
-        linked = extreme & snap["client_id"].isin(ph_clients)
-        F.add("fact_portfolio_snapshot", "return_ytd+active_alpha_ytd", 4,
-              f"extreme return/alpha (>100%) for clients with placeholder AUM {ph!r} months", "WARN",
-              int(linked.sum()), len(snap),
-              f"{int(linked.sum())} of {int(extreme.sum())} extreme rows belong to the {len(ph_clients)} placeholder "
-              f"clients ({int((linked & (snap['aum'] == ph)).sum())} on the placeholder months themselves); "
-              "returns computed on/after a fake balance are not real performance",
-              snap.loc[linked, "snapshot_id"])
-        F.add("fact_portfolio_snapshot", "return_ytd+active_alpha_ytd", 4,
-              "extreme return/alpha (>100%) for clients with no placeholder months", "INFO",
-              int((extreme & ~linked).sum()), len(snap),
-              "likely small accounts with large cash flows - reconcile against deposits before calling them wrong",
-              snap.loc[extreme & ~linked, "snapshot_id"])
-
     # 4.4 benchmark return is a market number: one value per benchmark per date
     g = snap.groupby(["benchmark_id", "snapshot_date"])["benchmark_return_ytd"].nunique()
     bad_keys = g[g > 1]
@@ -985,12 +956,19 @@ def cross_table_rules(T: dict[str, pd.DataFrame], F: Findings) -> None:
           "benchmark inconsistent with client risk_profile", "WARN", int(bad.sum()), len(snap),
           f"dominant mapping risk_profile->benchmark_id: {mapping.to_dict()}", known.loc[bad, "snapshot_id"])
     blank_rp = c[c["risk_profile"] == ""]
-    bench_of_blank = snap[snap["client_id"].isin(blank_rp["client_id"])].groupby("client_id")["benchmark_id"].nunique()
-    F.add("dim_client", "risk_profile", 4, "blank risk_profile - snapshot benchmark shows the client's mandate",
+    # which profiles use each benchmark? a benchmark used by exactly ONE profile identifies it
+    profiles_per_bench = known.groupby("benchmark_id")["risk_profile"].agg(lambda x: sorted(set(x)))
+    unique_bench = {b: p[0] for b, p in profiles_per_bench.items() if len(p) == 1}
+    bench_of_blank = snap[snap["client_id"].isin(blank_rp["client_id"])].groupby("client_id")["benchmark_id"] \
+        .agg(lambda x: sorted(set(x)))
+    recoverable = bench_of_blank[bench_of_blank.map(lambda b: len(b) == 1 and b[0] in unique_bench)]
+    no_snap = len(blank_rp) - len(bench_of_blank)
+    F.add("dim_client", "risk_profile", 4, "blank risk_profile - can the snapshot benchmark identify it?",
           "INFO", len(blank_rp), len(c),
-          f"{int((bench_of_blank == 1).sum())} of {len(blank_rp)} blank-profile clients have exactly one benchmark in "
-          f"snapshots; but several profiles share a benchmark, so the profile cannot be recovered with certainty",
-          blank_rp["client_id"])
+          f"profiles per benchmark: {profiles_per_bench.to_dict()}; {len(recoverable)} of {len(blank_rp)} "
+          f"blank-profile clients use a benchmark that belongs to exactly one profile "
+          f"({ {b: unique_bench[b[0]] for b in recoverable.map(tuple).unique()} }); "
+          f"{no_snap} have no snapshots", blank_rp["client_id"])
 
     # 4.6 activity before the client relationship started
     since = cl.set_index("client_id")["client_since"]
@@ -1010,23 +988,14 @@ def cross_table_rules(T: dict[str, pd.DataFrame], F: Findings) -> None:
               "structural: monthly rows are stamped on the 1st, so a client who joined mid-month has a row "
               "dated a few days before client_since - not a defect")
 
-    # 4.7 activity after the relationship ended: snapshots/fees stop when a client leaves,
-    #     so a transaction in a later month has no account to belong to
+    # 4.7 inactive clients with recent activity
     inactive = set(c.loc[c["is_active"] == "False", "client_id"])
-    last_snap = snap.groupby("client_id")["snapshot_date"].max()
-    lm = tx["client_id"].map(last_snap)
-    after = lm.notna() & (tx["txn_date"].str[:7] > lm.str[:7])
-    F.add("fact_transactions", "txn_date", 4, "transaction in a month after the client's last portfolio snapshot",
-          "WARN", int(after.sum()), len(tx),
-          f"{tx.loc[after, 'client_id'].nunique()} clients ({int(tx.loc[after, 'client_id'].isin(inactive).sum())} "
-          f"rows from is_active=False clients); by type {tx.loc[after, 'txn_type'].value_counts().to_dict()}",
-          tx.loc[after, "txn_id"])
-    active_stopped = last_snap[(last_snap < last_snap.max()) & ~last_snap.index.isin(inactive)]
-    F.add("dim_client", "is_active", 4, "is_active=True but snapshots stop before the end of the extract", "WARN",
-          len(active_stopped), len(c), f"extract ends {last_snap.max()}", active_stopped.index)
-    stopped = last_snap[last_snap.index.isin(inactive)]
-    F.add("dim_client", "is_active", 4, "inactive clients: last snapshot month", "INFO", len(stopped), len(c),
-          f"{len(inactive)} inactive clients; last snapshot ranges {stopped.min()} to {stopped.max()}")
+    last_tx = tx[tx["client_id"].isin(inactive)].groupby("client_id")["txn_date"].max()
+    recent = last_tx[last_tx >= "2024-07-01"]
+    F.add("dim_client", "is_active", 4, "inactive client with transactions in the last 6 months of the extract",
+          "WARN" if len(recent) else "INFO", len(recent), len(c),
+          f"{len(inactive)} inactive clients; last activity ranges {last_tx.min()} to {last_tx.max()}",
+          recent.index)
 
     # 4.8 trades on non-trading days
     if "dim_date" in T:
