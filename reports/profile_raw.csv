@@ -1,0 +1,76 @@
+table,column,rows,expected_type,type_source,blank_count,blank_pct,null_token_count,null_tokens_seen,distinct_count,distinct_pct,top_values,n_shapes,dominant_shapes,dominant_shape_pct,format_families,mixed_formats,minority_format_count,case_or_spacing_variants,parse_checked,parse_fail_count,parse_fail_pct,parse_fail_examples,leading_trailing_ws,internal_double_space,numeric_min,numeric_max,numeric_mean,min_length,max_length
+dim_advisor,advisor_id,25,int,schema,0,0.0,0,,25,100.0,1 (1); 2 (1); 3 (1),2,99 (64.0%); 9 (36.0%),64.0,integer,N,0,0,25,0,0.0,,0,0,1,25,13.0,1,2
+dim_advisor,first_name,25,text,schema,0,0.0,0,,24,96.0,Christopher (2); Danielle (1); Joshua (1),6,AAAAAAA (28.0%); AAAAA (24.0%); AAAAAAAA (16.0%),28.0,text,N,0,0,25,0,0.0,,0,0,,,,4,11
+dim_advisor,last_name,25,text,schema,0,0.0,0,,24,96.0,Johnson (2); Walker (1); Rhodes (1),7,AAAAAA (28.0%); AAAAA (24.0%); AAAAAAA (20.0%),28.0,text,N,0,0,25,0,0.0,,0,0,,,,3,10
+dim_advisor,region,25,text,schema,0,0.0,0,,5,20.0,Northeast (9); Southeast (7); Mid-Atlantic (6),4,AAAAAAAAA (64.0%); AAA-AAAAAAAA (24.0%); AAAA (8.0%),64.0,text,N,0,0,25,0,0.0,,0,0,,,,4,12
+dim_advisor,years_experience,25,int,schema,0,0.0,0,,17,68.0,28 (3); 24 (3); 23 (2),2,99 (72.0%); 9 (28.0%),72.0,integer,N,0,0,25,0,0.0,,0,0,4,28,16.24,1,2
+dim_advisor,aum_target_mm,25,decimal,schema,0,0.0,0,,5,20.0,50 (6); 150 (5); 75 (5),2,999 (56.0%); 99 (44.0%),56.0,integer,N,0,0,25,0,0.0,,0,0,50,200,113.0,2,3
+dim_advisor,certifications,25,text,schema,0,0.0,6,None,5,20.0,"CFA (6); None (6); CFP, CFA (6)",4,"AAA (36.0%); AAAA (24.0%); AAA, AAA (24.0%)",36.0,text,N,0,0,19,0,0.0,,0,0,,,,3,9
+dim_benchmark,benchmark_id,8,int,schema,0,0.0,0,,8,100.0,1 (1); 2 (1); 3 (1),1,9 (100.0%),100.0,integer,N,0,0,8,0,0.0,,0,0,1,8,4.5,1,1
+dim_benchmark,name,8,text,schema,0,0.0,0,,8,100.0,S&P 500 (1); Bloomberg US Agg Bond (1); 60/40 Blend (1),8,A&A 999 (12.5%); AAAAAAAAA AA AAA AAAA (12.5%); 99/99 AAAAA (12.5%),12.5,text,N,0,0,8,0,0.0,,0,0,,,,7,21
+dim_benchmark,asset_class,8,text,schema,0,0.0,0,,7,87.5,Multi-Asset (2); Equity (1); Fixed Income (1),7,AAAAA-AAAAA (25.0%); AAAAAA (12.5%); AAAAA AAAAAA (12.5%),25.0,text,N,0,0,8,0,0.0,,0,0,,,,4,13
+dim_benchmark,ticker_proxy,8,text,schema,0,0.0,0,,8,100.0,SPY (1); AGG (1); BLEND_6040 (1),4,AAA (62.5%); AAAAA_9999 (12.5%); AAAA (12.5%),62.5,text,N,0,0,8,0,0.0,,0,0,,,,3,10
+dim_client,client_id,2525,int,schema,0,0.0,0,,2525,100.0,1 (1); 2 (1); 3 (1),4,9999 (60.4%); 999 (35.6%); 99 (3.6%),60.436,integer,N,0,0,2525,0,0.0,,0,0,1,2525,1263.0,1,4
+dim_client,first_name,2525,text,schema,0,0.0,0,,505,20.0,Michael (50); James (42); Jennifer (40),10,AAAAA (26.5%); AAAAAA (24.8%); AAAAAAA (21.4%),26.495,text,N,0,0,2525,0,0.0,,0,0,,,,2,11
+dim_client,last_name,2525,text,schema,0,0.0,0,,778,30.812,Smith (64); Johnson (35); Miller (34),10,AAAAAA (25.5%); AAAAA (24.8%); AAAAAAA (17.5%),25.465,text,N,0,0,2525,0,0.0,,0,0,,,,2,11
+dim_client,age,2525,int,schema,0,0.0,0,,53,2.099,75 (59); 41 (59); 78 (58),1,99 (100.0%),100.0,integer,N,0,0,2525,0,0.0,,0,0,28,80,54.675644,2,2
+dim_client,city,2525,text,schema,0,0.0,0,,2291,90.733,Jenniferstad (5); North Melissa (5); Jamesmouth (5),52,AAAAAAAAAA (11.1%); AAAAAAAAAAA (10.9%); AAAAAAAAA (9.5%),11.129,text,N,0,0,2525,0,0.0,,0,0,,,,7,22
+dim_client,state,2525,text,schema,0,0.0,0,,27,1.069,PA (414); NY (294); NJ (292),8,AA (96.9%); AAAAAAAAAAAA (1.0%); AAAAAAA (0.6%),96.911,text,N,0,0,2525,0,0.0,,0,0,,,,2,12
+dim_client,zip_code,2525,text,schema,0,0.0,0,,2483,98.337,62825 (2); 22303 (2); 02635 (2),1,99999 (100.0%),100.0,integer,N,0,0,2525,0,0.0,,0,0,533,99822,50595.28,5,5
+dim_client,risk_profile,2525,text,schema,76,3.01,0,,6,0.238,Balanced (762); Moderately Conservative (505); Conservative (471),6,AAAAAAAA (30.2%); AAAAAAAAAA AAAAAAAAAAAA (20.0%); AAAAAAAAAAAA (18.7%),30.178,text,N,0,0,2449,0,0.0,,0,0,,,,8,23
+dim_client,client_tier,2525,text,schema,0,0.0,0,,3,0.119,Retail (1529); HNW (741); UHNW (255),3,AAAAAA (60.6%); AAA (29.3%); AAAA (10.1%),60.554,text,N,0,0,2525,0,0.0,,0,0,,,,3,6
+dim_client,primary_account_type,2525,text,schema,0,0.0,0,,5,0.198,Trust (548); 529 (523); Roth IRA (489),5,AAAAA (21.7%); 999 (20.7%); AAAA AAA (19.4%),21.703,"integer, text",Y,523,0,2525,0,0.0,,0,0,529.0,529.0,529.0,3,8
+dim_client,initial_aum,2525,decimal,schema,0,0.0,0,,2500,99.01,358583.01 (2); 384129.9 (2); 331606.56 (2),8,999999.99 (52.2%); 9999999.99 (23.9%); 99999999.99 (8.2%),52.198,"decimal, integer_as_float",N,0,0,2525,0,0.0,,0,0,50016.07,49901583.57,3730987.222764,7,11
+dim_client,client_since,2525,date,schema,0,0.0,0,,1651,65.386,2015-06-13 (5); 2015-07-06 (5); 2022-04-16 (5),1,9999-99-99 (100.0%),100.0,iso_date,N,0,0,2525,0,0.0,,0,0,,,,10,10
+dim_client,advisor_id,2525,int,schema,0,0.0,0,,25,0.99,16 (119); 9 (119); 4 (118),2,99 (62.3%); 9 (37.7%),62.297,integer,N,0,0,2525,0,0.0,,0,0,1,25,12.857822,1,2
+dim_client,is_active,2525,bool,schema,0,0.0,0,,2,0.079,True (2349); False (176),2,AAAA (93.0%); AAAAA (7.0%),93.03,bool_word,N,0,0,2525,0,0.0,,0,0,,,,4,5
+dim_date,date_id,1827,int,schema,0,0.0,0,,1827,100.0,1 (1); 2 (1); 3 (1),4,999 (49.3%); 9999 (45.3%); 99 (4.9%),49.261,integer,N,0,0,1827,0,0.0,,0,0,1,1827,914.0,1,4
+dim_date,date,1827,date,schema,0,0.0,0,,1827,100.0,2020-01-01 (1); 2020-01-02 (1); 2020-01-03 (1),1,9999-99-99 (100.0%),100.0,iso_date,N,0,0,1827,0,0.0,,0,0,,,,10,10
+dim_date,year,1827,int,schema,0,0.0,0,,5,0.274,2020 (366); 2024 (366); 2021 (365),1,9999 (100.0%),100.0,integer,N,0,0,1827,0,0.0,,0,0,2020,2024,2022.0,4,4
+dim_date,quarter,1827,int,schema,0,0.0,0,,4,0.219,3 (460); 4 (460); 2 (455),1,9 (100.0%),100.0,integer,N,0,0,1827,0,0.0,,0,0,1,4,2.507937,1,1
+dim_date,month,1827,int,schema,0,0.0,0,,12,0.657,1 (155); 3 (155); 5 (155),2,9 (74.8%); 99 (25.2%),74.822,integer,N,0,0,1827,0,0.0,,0,0,1,12,6.521073,1,2
+dim_date,month_name,1827,text,schema,0,0.0,0,,12,0.657,January (155); March (155); May (155),7,AAAAAAAA (24.5%); AAAAAAA (17.0%); AAAAA (16.7%),24.466,text,N,0,0,1827,0,0.0,,0,0,,,,3,9
+dim_date,week_of_year,1827,int,schema,0,0.0,0,,53,2.901,1 (35); 2 (35); 3 (35),2,99 (82.8%); 9 (17.2%),82.759,integer,N,0,0,1827,0,0.0,,0,0,1,53,26.601533,1,2
+dim_date,day_of_week,1827,text,schema,0,0.0,0,,7,0.383,Wednesday (261); Thursday (261); Friday (261),4,AAAAAA (42.9%); AAAAAAAA (28.6%); AAAAAAAAA (14.3%),42.857,text,N,0,0,1827,0,0.0,,0,0,,,,6,9
+dim_date,is_month_end,1827,int,schema,0,0.0,0,,2,0.109,0 (1767); 1 (60),1,9 (100.0%),100.0,integer,N,0,0,1827,0,0.0,,0,0,0,1,0.032841,1,1
+dim_date,is_quarter_end,1827,int,schema,0,0.0,0,,2,0.109,0 (1807); 1 (20),1,9 (100.0%),100.0,integer,N,0,0,1827,0,0.0,,0,0,0,1,0.010947,1,1
+dim_date,is_year_end,1827,int,schema,0,0.0,0,,2,0.109,0 (1822); 1 (5),1,9 (100.0%),100.0,integer,N,0,0,1827,0,0.0,,0,0,0,1,0.002737,1,1
+dim_date,is_trading_day,1827,int,schema,0,0.0,0,,2,0.109,1 (1305); 0 (522),1,9 (100.0%),100.0,integer,N,0,0,1827,0,0.0,,0,0,0,1,0.714286,1,1
+dim_security,security_id,500,int,schema,0,0.0,0,,500,100.0,1 (1); 2 (1); 3 (1),3,999 (80.2%); 99 (18.0%); 9 (1.8%),80.2,integer,N,0,0,500,0,0.0,,0,0,1,500,250.5,1,3
+dim_security,ticker,500,text,schema,0,0.0,0,,500,100.0,RKX (1); DTOT (1); JZDM (1),2,AAA (51.0%); AAAA (49.0%),51.0,text,N,0,0,500,0,0.0,,0,0,,,,3,4
+dim_security,name,500,text,schema,0,0.0,0,,497,99.4,Jones Inc Fund (2); Davis PLC Fund (2); Graham Group Inc. (2),233,AAAAA AAA AAAA (2.8%); AAAAA AAA AAA. (2.6%); AAAAAA AAA AAAA (2.2%),2.8,text,N,0,0,500,0,0.0,,0,0,,,,11,39
+dim_security,asset_class,500,text,schema,0,0.0,0,,4,0.8,Equity (281); Fixed Income (120); Alternative (58),4,AAAAAA (56.2%); AAAAA AAAAAA (24.0%); AAAAAAAAAAA (11.6%),56.2,text,N,0,0,500,0,0.0,,0,0,,,,6,15
+dim_security,sector,500,text,schema,219,43.8,0,,12,2.4, (219); Consumer Staples (35); Communication Services (33),9,<blank> (43.8%); AAAAAAAAAA (14.6%); AAAAAAAAA (11.2%),43.8,text,N,0,0,281,0,0.0,,0,0,,,,6,22
+dim_security,benchmark_id,500,int,schema,0,0.0,0,,6,1.2,2 (120); 1 (101); 5 (90),1,9 (100.0%),100.0,integer,N,0,0,500,0,0.0,,0,0,1,7,3.224,1,1
+dim_security,is_etf,500,bool,schema,0,0.0,0,,2,0.4,False (281); True (219),2,AAAAA (56.2%); AAAA (43.8%),56.2,bool_word,N,0,0,500,0,0.0,,0,0,,,,4,5
+dim_security,expense_ratio_bps,500,decimal,schema,281,56.2,0,,83,16.6, (281); 17.0 (7); 70.0 (6),3,<blank> (56.2%); 99.9 (41.4%); 9.9 (2.4%),56.2,integer_as_float,N,0,0,219,0,0.0,,0,0,3.0,95.0,49.360731,3,4
+fact_fees,fee_id,122197,int,schema,0,0.0,0,,122197,100.0,1 (1); 2 (1); 3 (1),6,99999 (73.7%); 999999 (18.2%); 9999 (7.4%),73.652,integer,N,0,0,122197,0,0.0,,0,0,1,122197,61099.0,1,6
+fact_fees,client_id,122197,int,schema,0,0.0,0,,2500,2.046,40 (60); 80 (60); 99 (60),4,9999 (59.6%); 999 (36.2%); 99 (3.7%),59.624,integer,N,0,0,122197,0,0.0,,0,0,1,2500,1245.549629,1,4
+fact_fees,advisor_id,122197,int,schema,0,0.0,0,,25,0.02,4 (5849); 16 (5763); 9 (5681),2,99 (62.7%); 9 (37.3%),62.714,integer,N,0,0,122197,0,0.0,,0,0,1,25,12.889416,1,2
+fact_fees,fee_date,122197,date,schema,0,0.0,0,,60,0.049,2022-12-01 (2414); 2022-11-01 (2363); 2023-02-01 (2337),1,9999-99-99 (100.0%),100.0,iso_date,N,0,0,122197,0,0.0,,0,0,,,,10,10
+fact_fees,fee_type,122197,text,schema,0,0.0,0,,4,0.003,Management (71122); Advisory (32370); Custodial (10259),4,AAAAAAAAAA (58.2%); AAAAAAAA (26.5%); AAAAAAAAA (8.4%),58.203,text,N,0,0,122197,0,0.0,,0,0,,,,8,11
+fact_fees,aum_basis,122197,decimal,schema,0,0.0,0,,121755,99.638,1000.0 (386); 462434.26 (2); 261696.83 (2),10,999999.99 (50.2%); 9999999.99 (24.8%); 99999999.99 (8.6%),50.173,"decimal, integer_as_float",N,0,0,122197,0,0.0,,0,0,1000.0,82386642.91,4406751.480523,6,11
+fact_fees,bps_charged,122197,decimal,schema,0,0.0,0,,5217,4.269,87.69 (123); 87.64 (121); 88.12 (118),3,99.99 (89.9%); 99.9 (10.1%); 999.99 (0.0%),89.894,"decimal, integer_as_float",N,0,0,122197,0,0.0,,0,0,25.56,100.38,75.990388,4,6
+fact_fees,amount,122197,decimal,schema,0,0.0,0,,81649,66.818,0.75 (92); 0.74 (87); 0.76 (84),10,999.99 (51.8%); 9999.99 (23.5%); 99.99 (9.1%),51.831,"decimal, integer_as_float",N,0,0,122197,0,0.0,,0,0,0.65,29412.47,1674.964059,3,8
+fact_portfolio_snapshot,snapshot_id,129547,int,schema,0,0.0,0,,129547,100.0,1 (1); 2 (1); 3 (1),6,99999 (69.5%); 999999 (22.8%); 9999 (6.9%),69.473,integer,N,0,0,129547,0,0.0,,0,0,1,129547,64774.0,1,6
+fact_portfolio_snapshot,client_id,129547,int,schema,0,0.0,0,,2500,1.93,1 (60); 4 (60); 5 (60),4,9999 (59.6%); 999 (36.2%); 99 (3.8%),59.635,integer,N,0,0,129547,0,0.0,,0,0,1,2500,1245.866651,1,4
+fact_portfolio_snapshot,advisor_id,129547,int,schema,0,0.0,0,,25,0.019,4 (6200); 16 (6132); 9 (6025),2,99 (62.8%); 9 (37.2%),62.752,integer,N,0,0,129547,0,0.0,,0,0,1,25,12.8963,1,2
+fact_portfolio_snapshot,benchmark_id,129547,int,schema,0,0.0,0,,3,0.002,8 (50117); 3 (42902); 1 (36528),1,9 (100.0%),100.0,integer,N,0,0,129547,0,0.0,,0,0,1,8,4.370383,1,1
+fact_portfolio_snapshot,snapshot_date,129547,date,schema,0,0.0,0,,60,0.046,2022-12-01 (2500); 2023-01-01 (2487); 2023-02-01 (2475),1,9999-99-99 (100.0%),100.0,iso_date,N,0,0,129547,0,0.0,,0,0,,,,10,10
+fact_portfolio_snapshot,year,129547,int,schema,0,0.0,0,,5,0.004,2023 (28875); 2022 (28125); 2024 (27900),1,9999 (100.0%),100.0,integer,N,0,0,129547,0,0.0,,0,0,2020,2024,2022.150995,4,4
+fact_portfolio_snapshot,month,129547,int,schema,0,0.0,0,,12,0.009,12 (11154); 11 (11093); 10 (11028),2,9 (74.3%); 99 (25.7%),74.314,integer,N,0,0,129547,0,0.0,,0,0,1,12,6.572943,1,2
+fact_portfolio_snapshot,aum,129547,decimal,schema,0,0.0,0,,129062,99.626,1000.0 (420); 462434.26 (2); 1019.83 (2),10,999999.99 (50.2%); 9999999.99 (24.7%); 99999999.99 (8.5%),50.223,"decimal, integer_as_float",N,0,0,129547,0,0.0,,0,0,1000.0,82386642.91,4374328.116764,6,11
+fact_portfolio_snapshot,return_ytd,129547,decimal,schema,0,0.0,0,,112233,86.635,0.0 (68); -0.963806 (10); -0.01472 (10),23,9.999999 (57.4%); -9.999999 (31.9%); 9.99999 (5.8%),57.449,"decimal, integer_as_float, percent",Y,300,0,129547,300,0.232,9.28% | 19.52% | 13.35% | 4.04% | -3.18%,0,0,-0.993708,94.668215,0.114419,3,9
+fact_portfolio_snapshot,benchmark_return_ytd,129547,decimal,schema,0,0.0,0,,180,0.139,-0.171382 (967); 0.006808 (964); -0.003092 (959),5,9.999999 (61.7%); -9.999999 (23.6%); 9.99999 (9.2%),61.68,decimal,N,0,0,129547,0,0.0,,0,0,-0.23978,0.273845,0.035784,7,9
+fact_portfolio_snapshot,active_alpha_ytd,129547,decimal,schema,0,0.0,0,,85398,65.92,0.001008 (14); 0.004016 (13); -0.000962 (12),19,9.999999 (48.9%); -9.999999 (40.3%); 9.99999 (4.9%),48.949,"decimal, integer_as_float",N,0,0,129547,0,0.0,,0,0,-1.22245,94.569541,0.078549,3,9
+fact_portfolio_snapshot,cash_pct,129547,decimal,schema,0,0.0,0,,701,0.541,0.0693 (226); 0.0253 (226); 0.0585 (225),3,9.9999 (90.0%); 9.999 (8.9%); 9.99 (1.0%),90.047,decimal,N,0,0,129547,0,0.0,,0,0,0.01,0.08,0.044948,4,6
+fact_portfolio_snapshot,account_type,129547,text,schema,0,0.0,0,,5,0.004,Trust (28221); 529 (26882); Roth IRA (25005),5,AAAAA (21.8%); 999 (20.8%); AAAA AAA (19.3%),21.784,"integer, text",Y,26882,0,129547,0,0.0,,0,0,529.0,529.0,529.0,3,8
+fact_transactions,txn_id,298772,int,schema,0,0.0,0,,298772,100.0,1 (1); 2 (1); 3 (1),6,999999 (66.5%); 99999 (30.1%); 9999 (3.0%),66.53,integer,N,0,0,298772,0,0.0,,0,0,1,298772,149386.5,1,6
+fact_transactions,client_id,298772,int,schema,0,0.0,0,,2700,0.904,152 (180); 287 (180); 292 (180),4,9999 (60.1%); 999 (36.0%); 99 (3.6%),60.101,integer,N,0,0,298772,0,0.0,,0,0,1,3192,1249.658291,1,4
+fact_transactions,advisor_id,298772,int,schema,0,0.0,0,,25,0.008,16 (14530); 9 (14157); 23 (13796),2,99 (61.9%); 9 (38.1%),61.889,integer,N,0,0,298772,0,0.0,,0,0,1,25,12.802512,1,2
+fact_transactions,security_id,298772,int,schema,101597,34.005,0,,501,0.168, (101597); 447.0 (546); 430.0 (520),4,999.9 (52.8%); <blank> (34.0%); 99.9 (11.9%),52.836,integer_as_float,N,0,0,197175,197175,100.0,45.0 | 174.0 | 478.0 | 406.0 | 484.0,0,0,1.0,500.0,249.324397,3,5
+fact_transactions,txn_date,298772,date,schema,0,0.0,0,,1826,0.611,2022-12-08 (246); 2023-01-17 (239); 2023-04-10 (238),1,9999-99-99 (100.0%),100.0,iso_date,N,0,0,298772,0,0.0,,0,0,,,,10,10
+fact_transactions,txn_type,298772,text,schema,0,0.0,0,,6,0.002,Buy (83556); Sell (59755); Dividend (53864),6,AAA (28.0%); AAAA (20.0%); AAAAAAAA (18.0%),27.966,text,N,0,0,298772,0,0.0,,0,0,,,,3,12
+fact_transactions,shares,298772,decimal,schema,101597,34.005,0,,193254,64.683, (101597); 105.4123 (3); 112.3942 (3),21,999.9999 (47.3%); <blank> (34.0%); 99.9999 (10.7%),47.344,"decimal, integer_as_float",N,0,0,197175,0,0.0,,0,0,-499.6323,499.9981,247.771581,3,9
+fact_transactions,price,298772,decimal,schema,101597,34.005,0,,48105,16.101, (101597); 446.16 (16); 106.68 (15),5,999.99 (48.5%); <blank> (34.0%); 99.99 (10.9%),48.484,"decimal, integer_as_float",N,0,0,197175,0,0.0,,0,0,10.0,500.0,255.134951,4,6
+fact_transactions,amount,298772,decimal,schema,0,0.0,0,,292741,97.981,179.82 (4); 192.26 (4); 344.65 (4),10,99999.99 (55.5%); 999999.99 (14.2%); 9999.99 (13.4%),55.51,"decimal, integer_as_float",N,0,0,298772,0,0.0,,0,0,13.33,249302.33,54075.166534,4,9
