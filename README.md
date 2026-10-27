@@ -1,7 +1,12 @@
-# hw04
+# HW04
 
 ## Structure
-
+- HW04 is divided into 5 parts: Wildcat Capital, descriptions, scripts, data, and reports
+    - Wildcat Capital is full of the raw datat that the scripts will use in their calcualtions
+    - descriptions contains the descriptions put into Claude to create the scripts
+    - scripts has the python programs used to profile, clean, and validate the data in Wildcat Capital
+    - data has the cleaned data from 02_clean.py
+    - reports contains the final audits with validation
 ## How to Run
 - First go load the raw data into the "Wildcat Capital" folder
 - Back out and enter the "scripts" folder
