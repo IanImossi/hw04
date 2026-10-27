@@ -1,0 +1,23 @@
+stage,recon_id,type,reconciliation,rows_compared,rows_agree,agree_pct,note
+raw,R1,cross-table,"fact_fees.aum_basis = fact_portfolio_snapshot.aum (same client, month)",122197,122197,100.0,0 fees with no snapshot
+raw,R2,cross-table,fact_fees.advisor_id = dim_client.advisor_id,122197,122197,100.0,0 rows with no client
+raw,R2,cross-table,fact_portfolio_snapshot.advisor_id = dim_client.advisor_id,129547,129547,100.0,0 rows with no client
+raw,R2,cross-table,fact_transactions.advisor_id = dim_client.advisor_id,298572,298572,100.0,200 rows with no client
+raw,R3,cross-table,fact_portfolio_snapshot.account_type = dim_client.primary_account_type,129547,129547,100.0,
+raw,R4,recomputed,"fact_fees.amount = aum_basis x bps_charged / 10,000 / 12",122197,122197,100.0,
+raw,R5,recomputed,fact_transactions.amount = shares x price (Buy/Sell/Dividend),197175,196339,99.576,
+raw,R6,recomputed,active_alpha_ytd = return_ytd - benchmark_return_ytd (return as a plain number),129547,129247,99.7684,percent strings fail until converted
+raw,R7,cross-row,return_ytd = aum / prior-December aum - 1,104823,104823,100.0,"shows return_ytd is a balance change including deposits, not investment performance"
+raw,R8,cross-row,benchmark_return_ytd identical for all clients on the same benchmark and date,129547,129547,100.0,
+raw,R9,cross-table,AUM jumps > 50% explained by that month's net deposits/withdrawals,797,123,15.4329,correlation of monthly AUM change with net cash flow = -0.029; transactions do not drive AUM in this extract (documented limitation)
+clean,R1,cross-table,"fact_fees.aum_basis = fact_portfolio_snapshot.aum (same client, month)",122197,122197,100.0,0 fees with no snapshot
+clean,R2,cross-table,fact_fees.advisor_id = dim_client.advisor_id,122197,122197,100.0,0 rows with no client
+clean,R2,cross-table,fact_portfolio_snapshot.advisor_id = dim_client.advisor_id,129547,129547,100.0,0 rows with no client
+clean,R2,cross-table,fact_transactions.advisor_id = dim_client.advisor_id,298572,298572,100.0,0 rows with no client
+clean,R3,cross-table,fact_portfolio_snapshot.account_type = dim_client.primary_account_type,129547,129547,100.0,
+clean,R4,recomputed,"fact_fees.amount = aum_basis x bps_charged / 10,000 / 12",122197,122197,100.0,
+clean,R5,recomputed,fact_transactions.amount = shares x price (Buy/Sell/Dividend),197044,197044,100.0,
+clean,R6,recomputed,active_alpha_ytd = return_ytd - benchmark_return_ytd (return as a plain number),129547,129547,100.0,percent strings fail until converted
+clean,R7,cross-row,return_ytd = aum / prior-December aum - 1,104823,104823,100.0,"shows return_ytd is a balance change including deposits, not investment performance"
+clean,R8,cross-row,benchmark_return_ytd identical for all clients on the same benchmark and date,129547,129547,100.0,
+clean,R9,cross-table,AUM jumps > 50% explained by that month's net deposits/withdrawals,797,123,15.4329,correlation of monthly AUM change with net cash flow = -0.029; transactions do not drive AUM in this extract (documented limitation)

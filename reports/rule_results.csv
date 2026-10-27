@@ -1,0 +1,111 @@
+stage,table,rule_id,column,rule,evaluated,failed,pass_pct
+raw,dim_advisor,ADV1,years_experience,0-60 years,25,0,100.0
+raw,dim_advisor,ADV2,aum_target_mm,> 0 ($ millions),25,0,100.0
+raw,dim_advisor,ADV3,region,in region list,25,0,100.0
+raw,dim_advisor,ADV4,certifications,only CFA/CFP/CIMA or 'None',25,0,100.0
+raw,dim_benchmark,BEN1,asset_class,in asset-class list,8,0,100.0
+raw,dim_benchmark,BEN2,name,not blank,8,0,100.0
+raw,dim_client,CLI1,age,18-110 (adult client),2525,0,100.0
+raw,dim_client,CLI2,state,USPS two-letter code,2525,78,96.9109
+raw,dim_client,CLI3,zip_code,exactly 5 digits,2525,0,100.0
+raw,dim_client,CLI4,risk_profile,in risk-profile list (blank fails),2525,76,96.9901
+raw,dim_client,CLI5,client_tier,Retail / HNW / UHNW,2525,0,100.0
+raw,dim_client,CLI6,primary_account_type,in account-type list,2525,0,100.0
+raw,dim_client,CLI7,initial_aum,> 0,2525,0,100.0
+raw,dim_client,CLI8,client_since,1950-01-01 to 2024-12-31,2525,0,100.0
+raw,dim_client,CLI9,is_active,True/False,2525,0,100.0
+raw,dim_client,CLI10,client_tier+initial_aum,"tier matches AUM band (Retail<500k, HNW<5M, UHNW>=5M)",2525,0,100.0
+raw,dim_client,CLI11,flag_*,flag columns are 0/1,0,0,100.0
+raw,dim_date,DAT1,year,2020-2024,1827,0,100.0
+raw,dim_date,DAT2,quarter,1-4,1827,0,100.0
+raw,dim_date,DAT3,month,1-12,1827,0,100.0
+raw,dim_date,DAT4,week_of_year,1-53,1827,0,100.0
+raw,dim_date,DAT5,is_*,flag columns are 0/1,1827,0,100.0
+raw,dim_date,DAT6,year/quarter/month/month_name/day_of_week,agree with the date,1827,0,100.0
+raw,dim_date,DAT7,is_trading_day,weekends are not trading days,522,0,100.0
+raw,dim_security,SEC1,asset_class,in asset-class list,500,0,100.0
+raw,dim_security,SEC2,is_etf,True/False,500,0,100.0
+raw,dim_security,SEC3,expense_ratio_bps,ETF: 0-300 bps,219,0,100.0
+raw,dim_security,SEC4,expense_ratio_bps,non-ETF: blank,281,0,100.0
+raw,dim_security,SEC5,sector,non-ETF: in sector list,281,0,100.0
+raw,dim_security,SEC6,ticker,2-5 capital letters,500,0,100.0
+raw,fact_fees,FEE1,fee_type,in fee-type list,122197,0,100.0
+raw,fact_fees,FEE2,aum_basis,> 0,122197,0,100.0
+raw,fact_fees,FEE3,bps_charged,0-100 bps (<= 1% a year),122197,1,99.9992
+raw,fact_fees,FEE4,amount,> 0 (sign rule: a charge is positive),122197,0,100.0
+raw,fact_fees,FEE5,fee_date,inside 2020-2024,122197,0,100.0
+raw,fact_fees,FEE6,fee_date,monthly fee dated on the 1st,122197,0,100.0
+raw,fact_fees,FEE7,flag_*,flag columns are 0/1,0,0,100.0
+raw,fact_portfolio_snapshot,SNP1,aum,> 0,129547,0,100.0
+raw,fact_portfolio_snapshot,SNP2,return_ytd,>= -100% (cannot lose more than everything),129547,0,100.0
+raw,fact_portfolio_snapshot,SNP3,return_ytd,<= +100% YTD (plausibility),129547,977,99.2458
+raw,fact_portfolio_snapshot,SNP4,benchmark_return_ytd,-100% to +100%,129547,0,100.0
+raw,fact_portfolio_snapshot,SNP5,cash_pct,0-1 (a share),129547,0,100.0
+raw,fact_portfolio_snapshot,SNP6,month,1-12,129547,0,100.0
+raw,fact_portfolio_snapshot,SNP7,year,2020-2024,129547,0,100.0
+raw,fact_portfolio_snapshot,SNP8,account_type,in account-type list,129547,0,100.0
+raw,fact_portfolio_snapshot,SNP9,year+month,agree with snapshot_date,129547,0,100.0
+raw,fact_portfolio_snapshot,SNP10,snapshot_date,dated on the 1st,129547,0,100.0
+raw,fact_portfolio_snapshot,SNP11,flag_*,flag columns are 0/1,0,0,100.0
+raw,fact_transactions,TXN1,txn_type,in transaction-type list,298772,0,100.0
+raw,fact_transactions,TXN2,amount,> 0 (sign rule: direction comes from txn_type),298772,0,100.0
+raw,fact_transactions,TXN3,shares,security txn: > 0 (sign rule),197175,836,99.576
+raw,fact_transactions,TXN4,price,security txn: > 0,197175,0,100.0
+raw,fact_transactions,TXN5,security_id/shares/price,cash txn: all blank,101597,0,100.0
+raw,fact_transactions,TXN6,security_id,security txn: present,197175,0,100.0
+raw,fact_transactions,TXN7,txn_date,inside 2020-2024,298772,0,100.0
+clean,dim_advisor,ADV1,years_experience,0-60 years,25,0,100.0
+clean,dim_advisor,ADV2,aum_target_mm,> 0 ($ millions),25,0,100.0
+clean,dim_advisor,ADV3,region,in region list,25,0,100.0
+clean,dim_advisor,ADV4,certifications,only CFA/CFP/CIMA or 'None',25,0,100.0
+clean,dim_benchmark,BEN1,asset_class,in asset-class list,8,0,100.0
+clean,dim_benchmark,BEN2,name,not blank,8,0,100.0
+clean,dim_client,CLI1,age,18-110 (adult client),2500,0,100.0
+clean,dim_client,CLI2,state,USPS two-letter code,2500,0,100.0
+clean,dim_client,CLI3,zip_code,exactly 5 digits,2500,0,100.0
+clean,dim_client,CLI4,risk_profile,in risk-profile list (blank fails),2500,0,100.0
+clean,dim_client,CLI5,client_tier,Retail / HNW / UHNW,2500,0,100.0
+clean,dim_client,CLI6,primary_account_type,in account-type list,2500,0,100.0
+clean,dim_client,CLI7,initial_aum,> 0,2500,0,100.0
+clean,dim_client,CLI8,client_since,1950-01-01 to 2024-12-31,2500,0,100.0
+clean,dim_client,CLI9,is_active,True/False,2500,0,100.0
+clean,dim_client,CLI10,client_tier+initial_aum,"tier matches AUM band (Retail<500k, HNW<5M, UHNW>=5M)",2500,0,100.0
+clean,dim_client,CLI11,flag_*,flag columns are 0/1,2500,0,100.0
+clean,dim_date,DAT1,year,2020-2024,1827,0,100.0
+clean,dim_date,DAT2,quarter,1-4,1827,0,100.0
+clean,dim_date,DAT3,month,1-12,1827,0,100.0
+clean,dim_date,DAT4,week_of_year,1-53,1827,0,100.0
+clean,dim_date,DAT5,is_*,flag columns are 0/1,1827,0,100.0
+clean,dim_date,DAT6,year/quarter/month/month_name/day_of_week,agree with the date,1827,0,100.0
+clean,dim_date,DAT7,is_trading_day,weekends are not trading days,522,0,100.0
+clean,dim_security,SEC1,asset_class,in asset-class list,500,0,100.0
+clean,dim_security,SEC2,is_etf,True/False,500,0,100.0
+clean,dim_security,SEC3,expense_ratio_bps,ETF: 0-300 bps,219,0,100.0
+clean,dim_security,SEC4,expense_ratio_bps,non-ETF: blank,281,0,100.0
+clean,dim_security,SEC5,sector,non-ETF: in sector list,281,0,100.0
+clean,dim_security,SEC6,ticker,2-5 capital letters,500,0,100.0
+clean,fact_fees,FEE1,fee_type,in fee-type list,122197,0,100.0
+clean,fact_fees,FEE2,aum_basis,> 0,122197,0,100.0
+clean,fact_fees,FEE3,bps_charged,0-100 bps (<= 1% a year),122197,1,99.9992
+clean,fact_fees,FEE4,amount,> 0 (sign rule: a charge is positive),122197,0,100.0
+clean,fact_fees,FEE5,fee_date,inside 2020-2024,122197,0,100.0
+clean,fact_fees,FEE6,fee_date,monthly fee dated on the 1st,122197,0,100.0
+clean,fact_fees,FEE7,flag_*,flag columns are 0/1,122197,0,100.0
+clean,fact_portfolio_snapshot,SNP1,aum,> 0,129547,0,100.0
+clean,fact_portfolio_snapshot,SNP2,return_ytd,>= -100% (cannot lose more than everything),129547,0,100.0
+clean,fact_portfolio_snapshot,SNP3,return_ytd,<= +100% YTD (plausibility),129547,977,99.2458
+clean,fact_portfolio_snapshot,SNP4,benchmark_return_ytd,-100% to +100%,129547,0,100.0
+clean,fact_portfolio_snapshot,SNP5,cash_pct,0-1 (a share),129547,0,100.0
+clean,fact_portfolio_snapshot,SNP6,month,1-12,129547,0,100.0
+clean,fact_portfolio_snapshot,SNP7,year,2020-2024,129547,0,100.0
+clean,fact_portfolio_snapshot,SNP8,account_type,in account-type list,129547,0,100.0
+clean,fact_portfolio_snapshot,SNP9,year+month,agree with snapshot_date,129547,0,100.0
+clean,fact_portfolio_snapshot,SNP10,snapshot_date,dated on the 1st,129547,0,100.0
+clean,fact_portfolio_snapshot,SNP11,flag_*,flag columns are 0/1,129547,0,100.0
+clean,fact_transactions,TXN1,txn_type,in transaction-type list,298572,0,100.0
+clean,fact_transactions,TXN2,amount,> 0 (sign rule: direction comes from txn_type),298572,0,100.0
+clean,fact_transactions,TXN3,shares,security txn: > 0 (sign rule),197044,0,100.0
+clean,fact_transactions,TXN4,price,security txn: > 0,197044,0,100.0
+clean,fact_transactions,TXN5,security_id/shares/price,cash txn: all blank,101528,0,100.0
+clean,fact_transactions,TXN6,security_id,security txn: present,197044,0,100.0
+clean,fact_transactions,TXN7,txn_date,inside 2020-2024,298572,0,100.0
